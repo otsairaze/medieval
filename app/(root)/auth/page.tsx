@@ -7,6 +7,7 @@ import Selector from "./components/Selector";
 
 export default function Page() {
   const [activeId, setActiveId] = React.useState(1);
+  const [selectedDescription, setSelectedDescription] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
   const button = [
@@ -17,19 +18,60 @@ export default function Page() {
     },
     {
       id: 2,
-      button: "Класс",
-      variants: ["Рыцарь", "Маг"],
+      button: "Возраст",
+      variants: ["Юный", "Молодой", "Средний", "Старый"],
     },
     {
       id: 3,
-      button: "Раса",
-      variants: ["Человек", "Ящер"],
+      button: "Класс",
+      variants: [
+        "Рыцарь",
+        "Наемник",
+        "Воин",
+        "Глашатай",
+        "Вор",
+        "Убийца",
+        "Чародей",
+        "Пиромант",
+        "Клирик",
+        "Нищий",
+      ],
+    },
+    {
+      id: 4,
+      button: "Погребальный дар",
+      variants: [
+        {
+          id: 1,
+          title: "Неприкаянная душа",
+          description:
+            "Неприкаянная душа, принадлежавшая тому, кто спал рядом с вами. Испоьзуйте, чтобы получить много душ",
+        },
+        {
+          id: 2,
+          title: "Неприкаянная душа",
+          description: "ыы",
+        },
+      ],
+    },
+    {
+      id: 5,
+      button: "Телосложение",
+      variants: ["Нормальное", "Среднее", "Сильное"],
     },
   ];
 
   const handleIdClick = (id: number) => {
     setActiveId(id);
     setOpen((prev) => !prev);
+  };
+
+  const handleSelect = (item) => {
+    if (typeof item === "string") {
+      setSelectedDescription(item);
+    } else if (item.description) {
+      setSelectedDescription(item.description);
+    }
   };
 
   return (
@@ -57,9 +99,14 @@ export default function Page() {
         </div>
         <div className="max-w-[700px] h-[800px] w-full bg-gray-700 flex flex-col justify-start items-center ">
           <Typography variant="paragraph16_semibold" tag="h2">
-            text
+            {selectedDescription || "Выберите элемент для отображения описания"}{" "}
           </Typography>
-          {open && <Selector items={button[activeId - 1].variants} />}
+          {open && (
+            <Selector
+              onSelect={handleSelect}
+              items={button[activeId - 1].variants}
+            />
+          )}
         </div>
       </div>
     </div>

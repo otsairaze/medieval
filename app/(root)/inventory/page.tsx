@@ -1,18 +1,20 @@
-import Inventory from "@/shared/components/Inventory/Inventory";
 import { Container } from "@/shared/shared/Container";
-import Header from "@/shared/shared/Header";
+import Image from "next/image";
 import Navigation from "@/shared/shared/Navigation";
 import Typography from "@/shared/shared/Typography/Typography";
+import Inventory from "@/shared/components/Inventory/Inventory";
 
-import Image from "next/image";
-
-export default function Home() {
+export default function Page() {
   return (
     <Container>
-      <div className="flex">
+      <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-5">
           <Image src="/banner.png" width={1250} height={400} alt="banner" />
           <Navigation />
+        </div>
+
+        <div>
+          <Inventory />
         </div>
       </div>
     </Container>
