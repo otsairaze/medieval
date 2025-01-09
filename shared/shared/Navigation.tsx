@@ -6,7 +6,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export default function Navigation() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleOpen = () => setOpen((prev) => !prev);
 
