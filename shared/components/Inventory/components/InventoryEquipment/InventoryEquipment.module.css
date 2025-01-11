@@ -9,11 +9,9 @@
 
 .ammunition {
   max-width: 250px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 12px;
-  grid-row-gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .equipment {

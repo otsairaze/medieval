@@ -24,8 +24,6 @@ export default function InventoryEquipment() {
         <div className={styles.ammunition}>
           <InventoryCell />
           <InventoryCell />
-          <InventoryCell />
-          <InventoryCell />
         </div>
       </div>
       <div className={styles.equipment}>

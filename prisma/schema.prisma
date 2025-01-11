@@ -1,21 +1,118 @@
-generator client {
-    provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-
 model User {
-    id       Int @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
+  name       String
+  password   String
 
-    name     String
-    password String
-    
+  characters Character[]
 }
 
-model Inventory {
-    
+model Class {
+  id           Int         @id @default(autoincrement())
+  name         String
+  description  String?
+
+  vitality     Int
+  strength     Int
+  dexterity    Int
+  intelligence Int
+  faith        Int
+  luck         Int
+
+  characters   Character[]
+}
+
+model Character {
+  id           Int        @id @default(autoincrement())
+  name         String
+  level        Int        @default(1)
+  vitality     Int
+  strength     Int
+  dexterity    Int
+  intelligence Int
+  faith        Int
+  luck         Int
+
+  userId       Int
+  user         User       @relation(fields: [userId], references: [id])
+
+  classId      Int
+  classType    Class      @relation(fields: [classId], references: [id])
+
+  equipment    Equipment? @relation(fields: [equipmentId], references: [id]) 
+  equipmentId  Int?       @unique 
+}
+
+model Equipment {
+  id                Int        @id @default(autoincrement())
+
+  character         Character? 
+  
+
+  // Слоты для правой руки
+  rightHandPrimary  String? 
+  rightHandSecondary String?
+  rightHandTertiary String? 
+
+  // Слоты для левой руки
+  leftHandPrimary   String? 
+  leftHandSecondary String? 
+  leftHandTertiary  String? 
+
+  // Аммуниция для луков и арбалетов
+  arrows            Arrow[]
+  bolts             Bolt[]
+
+  // Снаряжение
+  helmet            String? 
+  chestplate        String? 
+  leggings          String? 
+  boots             String? 
+
+  // Кольца
+  ringSlot1         String?
+  ringSlot2         String?
+  ringSlot3         String?
+  ringSlot4         String?
+
+  // Быстрые слоты
+  quickSlot1        String? 
+  quickSlot2        String? 
+  quickSlot3        String? 
+  quickSlot4        String? 
+  quickSlot5        String? 
+  quickSlot6        String? 
+  quickSlot7        String? 
+  quickSlot8        String? 
+  quickSlot9        String? 
+  quickSlot10       String? 
+
+  // Ковенант
+  CovenantId        Int?  
+  Covenant          Covenant? @relation(fields: [CovenantId], references: [id])
+}
+
+model Arrow {
+  id                Int     @id @default(autoincrement())
+  type              String
+  quantity          Int
+
+  equipmentId       Int
+  equipment         Equipment @relation(fields: [equipmentId], references: [id])
+}
+
+model Bolt {
+  id                Int     @id @default(autoincrement())
+  type              String
+  quantity          Int
+
+  equipmentId       Int
+  equipment         Equipment @relation(fields: [equipmentId], references: [id])
+}
+
+model Covenant {
+  id                Int     @id @default(autoincrement())
+  name              String
+  imageUrl          String
+  description       String
+  members           Equipment[]
 }
