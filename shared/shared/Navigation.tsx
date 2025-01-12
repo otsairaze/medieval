@@ -19,8 +19,8 @@ export default function Navigation() {
 
     {
       id: 2,
-      title: "Аукцион",
-      url: "/auction",
+      title: "Компания",
+      url: "/company",
     },
 
     {
@@ -37,12 +37,11 @@ export default function Navigation() {
 
     {
       id: 5,
-      title: "Налёт",
-      url: "/flight",
+      title: "Аукцион",
+      url: "/auction",
     },
   ];
 
-  //"Инвентарь", "Аукцион", "Магазин", "Дуэли", "Налёт"
   return (
     <>
       <div className="flex gap-4 items-center">

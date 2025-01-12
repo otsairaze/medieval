@@ -1,9 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
 model User {
   id         Int         @id @default(autoincrement())
   name       String
   password   String
+  email      String @unique
+  role       ROLE
 
   characters Character[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Class {
@@ -19,6 +34,9 @@ model Class {
   luck         Int
 
   characters   Character[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Character {
@@ -40,6 +58,9 @@ model Character {
 
   equipment    Equipment? @relation(fields: [equipmentId], references: [id]) 
   equipmentId  Int?       @unique 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Equipment {
@@ -89,6 +110,9 @@ model Equipment {
   // Ковенант
   CovenantId        Int?  
   Covenant          Covenant? @relation(fields: [CovenantId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Arrow {
@@ -98,6 +122,9 @@ model Arrow {
 
   equipmentId       Int
   equipment         Equipment @relation(fields: [equipmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Bolt {
@@ -107,6 +134,9 @@ model Bolt {
 
   equipmentId       Int
   equipment         Equipment @relation(fields: [equipmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Covenant {
@@ -115,4 +145,51 @@ model Covenant {
   imageUrl          String
   description       String
   members           Equipment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Location {
+  id        Int     @id @default(autoincrement())
+  name      String
+  boss      Boss?   @relation("BossToLocation")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Boss {
+  id          Int      @id @default(autoincrement())
+  name        String
+  healthPoints Int
+  energy      Int
+
+  locationId  Int      @unique 
+  location    Location @relation("BossToLocation", fields: [locationId], references: [id])
+
+  loot        Loot[]   
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Loot {
+  id                Int     @id @default(autoincrement())
+  name              String
+  dropChance        Float 
+  
+  bossId            Int
+  boss              Boss @relation(fields: [bossId], references: [id])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+
+
+
+enum ROLE {
+  USER
+  ADMIN
 }

@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "./Typography/Typography";
 import Navigation from "./Navigation";
 import Link from "next/link";
+import { LogOut } from "lucide-react";
 
 export default function Header() {
   return (
@@ -12,9 +13,12 @@ export default function Header() {
             MedievalSouls
           </Typography>
         </Link>
-        <Typography variant="title20_bold" tag="h2">
-          Вход
-        </Typography>
+        <Link className="flex items-center gap-2" href={"/auth"}>
+          <Typography variant="title20_bold" tag="h2">
+            Вход
+          </Typography>
+          <LogOut />
+        </Link>
       </div>
     </>
   );
